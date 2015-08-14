@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./static/layout.css">
     <style type="text/css">
     strike { opacity: .8; }
+    textarea { font-size: 13px; }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -70,7 +71,7 @@
             </p>
             <form id="replace" class="pure-form">
                 <textarea name="content" class="pure-input-1" rows="10" placeholder="수정할 내용을 입력하세요."></textarea>
-                <button type="button" class="pure-button pure-input-1 pure-button-primary">고치기</button>
+                <button type="submit" class="pure-button pure-input-1 pure-button-primary">고치기 (ctrl + enter || command + return)</button>
             </form>
         </div>
 
@@ -90,10 +91,22 @@
         var form = $('#replace');
         var content = form.find('textarea[name="content"]');
 
-        form.find('button').click(function() {
+        var submitHandler = function() {
             var text = content.val();
             content.val(appl2app(text));
+
+            return false;
+        };
+        content.on('keydown', function(e) {
+            if (!(e.keyCode == 13 && e.metaKey)) return;
+
+            var $target = $(e.target);
+            if ($target.is('textarea')) {
+                $target.closest('form').submit();
+            }
         });
+
+        form.submit(submitHandler);
     });
 </script>
 </body>
