@@ -11,6 +11,8 @@
          *
          * @var String text
          *     a string to be replaced
+         *
+         * @return String
          */
         replace: function(text) {
             for(let i = 0; i < this.map.length; i++) {
